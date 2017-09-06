@@ -9,21 +9,18 @@ from .forms import ContactForm
 def email(request):
     if request.method == 'GET':
         form = ContactForm()
+        return HttpResponse("This was a get request.", 400)
     else:
-        form = ContactForm(request.POST)
         req_body = json.loads(request.body.decode())
         print(req_body)
-        if form.is_valid():
-            print("form is valid")
-            subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email, ['fake@fake.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return redirect('success')
-    return render(request, "email.html", {'form': form})
+        subject = req_body['subject']
+        from_email = req_body['from_email']
+        message = req_body['message']
+        try:
+            send_mail(subject, message, from_email, ['fake@fake.com'])
+            return HttpResponse('Success! Thank you for your message.', 200)
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
 
 
 
