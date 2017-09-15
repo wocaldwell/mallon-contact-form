@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.conf import settings
 from .forms import ContactForm
 
 @csrf_exempt
@@ -30,7 +31,7 @@ def email(request):
         from_email = req_body['from_email']
         message = "Sender Name: {} {}\nMessage: {}".format(req_body['first_name'], req_body['last_name'], req_body['message'])
         try:
-            send_mail(subject, message, from_email, ['fake@fake.com'])
+            send_mail(subject, message, from_email, [settings.MALLONEMAIL])
             return HttpResponse('Success! Thank you for your message.', 200)
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
