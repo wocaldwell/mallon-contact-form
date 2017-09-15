@@ -22,6 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0p7n^93#hv$32o5*cqx2)4ko*nhnqu#+%72i3y7ntrs5h!wl)1'
 
+# Email credintials from env
+SENDGRIDUSER = os.environ['SENDGRIDUSER']
+SENDGRIDPASSWORD = os.environ['SENDGRIDPASSWORD']
+MALLONEMAIL = os.environ['MALLONEMAIL']
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,16 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# MIDDLEWARE = [
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-# ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -63,9 +58,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
-    '127.0.0.1:8080',
-    'https://www.williamocaldwell.com'
-    'http://www.williamocaldwell.com'
+    '127.0.0.1:8080'
 )
 
 ROOT_URLCONF = 'mallon_contact_form.urls'
@@ -138,5 +131,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = SENDGRIDUSER
+EMAIL_HOST_PASSWORD = SENDGRIDPASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
