@@ -18,7 +18,6 @@ def email(request):
         # validate all fields are not null
         for field_name, field_content in req_body.items():
             if field_content:
-                print("{} is good!".format(field_name))
                 pass
             else:
                 return HttpResponseBadRequest("{} cannot be null.")
